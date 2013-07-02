@@ -1,0 +1,7 @@
+name             'chef-upgrade'
+maintainer       'Steven MacLeod'
+maintainer_email 'steven@smacleod.ca'
+license          'MIT'
+description      'Upgrade the chef-client version'
+long_description 'Upgrade the chef-client version'
+version          '0.1.0'
