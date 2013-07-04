@@ -1,9 +1,0 @@
-[submodule "src/reviewboard"]
-	path = src/reviewboard
-	url = git@github.com:reviewboard/reviewboard.git
-[submodule "src/rbtools"]
-	path = src/rbtools
-	url = git@github.com:reviewboard/rbtools.git
-[submodule "src/djblets"]
-	path = src/djblets
-	url = git@github.com:djblets/djblets.git
