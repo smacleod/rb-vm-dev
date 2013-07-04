@@ -1,0 +1,4 @@
+This 'src' directory will be ignored by the Review Board
+VM Development git tree and shared to '/src/' inside the
+VM. The reviewboard and other related repositories should
+be cloned into this directory.
