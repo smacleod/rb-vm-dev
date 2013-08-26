@@ -1,42 +1,64 @@
-A repository for Review Board development using vagrant.
+**TL;DR:**
 
-To get started, clone this repository, and then run the following command in
-the root directory:
+To develop Review Board inside a VM, clone this respository and run the following:
+
+    git clone https://github.com/reviewboard/reviewboard.git src/reviewboard
+    git clone https://github.com/djblets/djblets.git src/djblets
+    vagrant up # Takes ~5-45 minutes
+    vagrant ssh
+    cd /src/djblets && ./setup.py develop release && cd /src/reviewboard && ./setup.py develop
+    ./contrib/internal/prepare-dev.py
+
+# Review Board VM Based Development
+
+This repository provides configuration for developing Review Board inside a VM
+using vagrant. To get started first clone this repository. You should then clone
+the repositories needed for review board development into the *src* directory:
+
+    git clone https://github.com/reviewboard/reviewboard.git src/reviewboard
+    git clone https://github.com/djblets/djblets.git src/djblets
+
+The *src* directory will be shared inside the vm, and synced with any
+modifications made in your host operating system.
+
+To create and start the VM and install the required dependencies run:
 
     vagrant up
 
 This will create a virtual machine, and provision it with the dependencies
-required for developing Review Board.
+required for developing Review Board. This can take anywhere from five minutes
+to an hour, and will vary greatly depending on your connection speed.
 
-Any files placed in the 'src' subdirectory will be shared with the VM, and
-can be accessed at '/src/' inside. This is a great place to clone the
-Review Board project code for development:
-
-    cd src
-    git clone https://github.com/reviewboard/reviewboard.git
-    git clone https://github.com/djblets/djblets.git
-    git clone https://github.com/reviewboard/rbtools.git
-
-To start developing, ssh into the VM, install the Review Board code, and prepare
-the development environment with the following commands:
+Now you will ssh into the VM with the following command:
 
     vagrant ssh
-    cd /src/rbtools
-    ./setup.py develop
-    cd ../djblets
-    ./setup.py develop
-    cd ../reviewboard
-    ./setup.py develop
+
+The *src* directory on your host machine will be shared to */src* inside the VM.
+We will now setup the code you cloned previously for development with the
+following command (Make sure you are ssh'd into the VM before running these):
+
+    cd /src/djblets && ./setup.py develop release && cd /src/reviewboard && ./setup.py develop
+
+The final step to make your environment ready for development is to run:
+
+    cd /src/reviewboard
     ./contrib/internal/prepare-dev.py
 
-Any changes made to the code in 'src/' will be reflected inside the VM. Use your
-favourite editor to make modifications, and test them inside the VM.
+# Developing
 
-The Review Board server can be ran inside the VM using the following commands:
+Now that the environment has been created, you can run the development server
+by executing the following commands:
 
-    vagrant ssh
+    vagrant ssh # SSH into the VM
     cd /src/reviewboard
     ./contrib/internal/devserver.py
 
-This will start the Review Board development server inside the VM, which can be
-accessed in your web browser at http://localhost:8080
+This will start the development server inside the VM, which can be accessed
+by pointing your browser at http://localhost:8080
+
+To run the unit tests, execute the following commands:
+
+    vagrant ssh # SSH into the VM
+    cd /src/reviewboard
+    ./reviewboard/manage.py test
+

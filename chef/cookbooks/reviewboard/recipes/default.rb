@@ -1,3 +1,5 @@
+include_recipe "python::default"
+
 package "git" do
   action :install
 end
@@ -31,6 +33,10 @@ package "pylucene" do
 end
 
 package "monotone" do
+  action :install
+end
+
+package "stunnel" do
   action :install
 end
 
