@@ -1,13 +1,21 @@
 **TL;DR:**
 
-To develop Review Board inside a VM, clone this respository and run the following:
+To develop Review Board inside a VM, [make sure you have Vagrant installed](http://www.vagrantup.com/), and then do following:
 
+    git clone https://github.com/smacleod/rb-vm-dev.git # Clone this repo, of course
+    cd rb-vm-dev
     git clone https://github.com/reviewboard/reviewboard.git src/reviewboard
     git clone https://github.com/djblets/djblets.git src/djblets
     vagrant up # Takes ~5-45 minutes
     vagrant ssh
     cd /src/djblets && ./setup.py develop release && cd /src/reviewboard && ./setup.py develop
     ./contrib/internal/prepare-dev.py
+
+And you're all set! To run the development server, run this:
+
+    ./contrib/internal/devserver.py
+
+And then point a browser at [http://localhost:8080](http://localhost:8080).
 
 # Review Board VM Based Development
 
