@@ -6,7 +6,7 @@ To develop Review Board inside a VM, [make sure you have Vagrant installed](http
     cd rb-vm-dev
     git clone https://github.com/reviewboard/reviewboard.git src/reviewboard
     git clone https://github.com/djblets/djblets.git src/djblets
-    vagrant up # Takes ~5-45 minutes
+    vagrant up --provider vmware_fusion # Takes ~5-45 minutes
     vagrant ssh
     cd /src/djblets && ./setup.py develop release && cd /src/reviewboard && ./setup.py develop
     ./contrib/internal/prepare-dev.py
@@ -31,7 +31,12 @@ modifications made in your host operating system.
 
 To create and start the VM and install the required dependencies run:
 
-    vagrant up
+    vagrant up --provider vmware_fusion
+
+VMWare Workstation, and VirtualBox are also support with the following commands:
+
+    vagrant up --provider vmware_workstation # For VMWare Workstation
+    vagrant up # For VirtualBox
 
 This will create a virtual machine, and provision it with the dependencies
 required for developing Review Board. This can take anywhere from five minutes

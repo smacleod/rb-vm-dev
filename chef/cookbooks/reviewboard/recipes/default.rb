@@ -1,4 +1,9 @@
+include_recipe "apt::default"
 include_recipe "python::default"
+
+package "build-essential" do
+  action :install
+end
 
 package "git" do
   action :install
@@ -56,6 +61,7 @@ script "gen-ssh-key" do
   code <<-EOH
   ssh-keygen -f #{node.default["reviewboard"]["home"]}/.ssh/id_rsa -t rsa -N ''
   cat #{node.default["reviewboard"]["home"]}/.ssh/id_rsa.pub >> #{node.default["reviewboard"]["home"]}/.ssh/authorized_keys
+  ssh-keyscan localhost >> #{node.default["reviewboard"]["home"]}/.ssh/known_hosts
   EOH
   not_if do
     File.exists?("#{node.default["reviewboard"]["home"]}/.ssh/id_rsa.pub")
@@ -82,3 +88,15 @@ python_virtualenv node.default["reviewboard"]["env_path"] do
   group node.default["reviewboard"]["user"]
   action :create
 end
+
+# Fix the permissions on .python-eggs to avoid warnings
+script "fix .python-eggs warnings" do
+  interpreter "bash"
+  user node.default['reviewboard']['user']
+  cwd node.default['reviewboard']['home']
+  code <<-EOH
+  chmod g-wx,o-wx ~/.python-eggs
+  echo "source #{node.default["reviewboard"]["env_path"]}/bin/activate" >> #{node.default['reviewboard']['home']}/.bashrc
+  EOH
+end
+
