@@ -3,6 +3,21 @@ python Cookbook CHANGELOG
 This file is used to list changes made in each version of the python cookbook.
 
 
+v1.4.4
+------
+[COOK-3816] - Including ez_setup script with cookbook instead of downloading from the internet
+
+
+v1.4.2
+------
+### Bug
+- **[COOK-3796](https://tickets.opscode.com/browse/COOK-3796)** - Virtualenv can fail
+
+### Improvement
+- **[COOK-3719](https://tickets.opscode.com/browse/COOK-3719)** - Allow alternative install python, update pip location
+- **[COOK-3703](https://tickets.opscode.com/browse/COOK-3703)** - Create symlink for source built python [python3 support]
+
+
 v1.4.0
 ------
 ### New Feature

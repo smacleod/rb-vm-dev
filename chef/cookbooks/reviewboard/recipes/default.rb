@@ -45,10 +45,18 @@ package "stunnel" do
   action :install
 end
 
+python_pip "virtualenv" do
+  action :upgrade
+end
+
 python_pip "nose"
 python_pip "Sphinx"
 python_pip "kgb"
-python_pip "bzr"
+
+python_pip "bzr" do
+  action :install
+  options "--allow-external bzr --allow-unverified bzr"
+end
 
 include_recipe "reviewboard::perforce"
 
