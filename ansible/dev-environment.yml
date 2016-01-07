@@ -5,4 +5,4 @@
     - system-dependencies
     - { role: repository-clones, src_dir: '/src' }
     - { role: rb-virtualenv, venv: '/src/venv' }
-    - { role: dev-install, src_dir: '/src', venv: '/src/venv', suser: 'admin'}
+    - { role: dev-install, src_dir: '/src', venv: '/src/venv', suser: 'admin', local_user: 'vagrant' }

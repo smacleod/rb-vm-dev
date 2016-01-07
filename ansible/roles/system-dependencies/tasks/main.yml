@@ -15,4 +15,12 @@
     - python-subvertpy
     - gettext
     - libjpeg8-dev
+    - monotone
+    - bzr
+  sudo: yes
+
+- name: download p4
+  get_url: url=http://filehost.perforce.com/perforce/r13.1/bin.linux26x86_64/p4
+           dest=/usr/bin/p4
+           mode=00755
   sudo: yes

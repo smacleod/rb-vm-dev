@@ -1,3 +1,6 @@
 kgb
+mercurial
 nose
+p4python
 Sphinx
+subvertpy

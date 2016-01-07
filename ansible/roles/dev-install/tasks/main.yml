@@ -38,4 +38,19 @@
     chdir: "{{ src_dir}}/reviewboard"
   when: db_files.rc != 0
 
+- name: generate an ssh key for ssh tests
+  shell: ssh-keygen -f /home/{{ local_user }}/.ssh/id_rsa -t rsa -N ''
+  args:
+    creates: /home/{{ local_user }}/.ssh/id_rsa.pub
+
+- name: add the generated key to authorized_keys
+  authorized_key: user={{ local_user }} key="{{ item }}"
+  with_file:
+    - /home/{{ local_user }}/.ssh/id_rsa.pub
+
+- name: add localhost to known hosts
+  shell: ssh-keyscan -H localhost >> /home/{{ local_user }}/.ssh/known_hosts
+  args:
+    creates: /home/{{ local_user }}/.ssh/known_hosts
+
 
