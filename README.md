@@ -25,6 +25,6 @@ for development will be automatically cloned to this directory.
 To run the unit tests, execute the following commands:
 
     vagrant ssh # SSH into the VM
-    aouexw /src/venv/bin/activate
+    source /src/venv/bin/activate
     cd /src/reviewboard
     ./reviewboard/manage.py test
