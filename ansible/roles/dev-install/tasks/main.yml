@@ -1,0 +1,41 @@
+---
+
+- name: install development requirements
+  command: "{{ venv }}/bin/python "
+
+- name: install development requirements
+  pip: virtualenv={{ venv }}
+       requirements={{ src_dir }}/{{ item }}/dev-requirements.txt
+       executable={{ venv }}/bin/pip
+  with_items:
+    - djblets
+    - reviewboard
+    - rbtools
+
+- name: install djblets source
+  command: "{{ venv }}/bin/python setup.py develop release chdir={{ src_dir }}/djblets"
+
+- name: install other source directories
+  command: "{{ venv }}/bin/python setup.py develop chdir={{ src_dir }}/{{ item }}"
+  with_items:
+    - reviewboard
+    - rbtools
+
+- name: check if a database exists
+  shell: "ls {{ src_dir }}/reviewboard/ | grep 'reviewboard-.*\\.db'"
+  register: db_files
+  ignore_errors: True
+
+- name: run prepare-dev.py to create database
+  shell: "yes no | {{ venv }}/bin/python {{ src_dir }}/reviewboard/contrib/internal/prepare-dev.py"
+  args:
+    chdir: "{{ src_dir }}/reviewboard"
+  when: db_files.rc != 0
+
+- name: create a superuser
+  shell: "yes password | {{ venv }}/bin/python {{ src_dir }}/reviewboard/reviewboard/manage.py createsuperuser --username={{ suser }} --email={{ suser }}@example.com"
+  args:
+    chdir: "{{ src_dir}}/reviewboard"
+  when: db_files.rc != 0
+
+

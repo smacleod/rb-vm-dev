@@ -1,0 +1,8 @@
+---
+- name: Setup Development Environment
+  hosts: all
+  roles:
+    - system-dependencies
+    - { role: repository-clones, src_dir: '/src' }
+    - { role: rb-virtualenv, venv: '/src/venv' }
+    - { role: dev-install, src_dir: '/src', venv: '/src/venv', suser: 'admin'}

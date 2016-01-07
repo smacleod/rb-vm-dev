@@ -1,0 +1,18 @@
+---
+# Install needed system dependencies
+
+- name: install required apt packages
+  apt: name={{ item }}
+  with_items:
+    - git
+    - build-essential
+    - patch
+    - python-dev
+    - python-setuptools
+    - cvs
+    - subversion
+    - libsvn-dev
+    - python-subvertpy
+    - gettext
+    - libjpeg8-dev
+  sudo: yes

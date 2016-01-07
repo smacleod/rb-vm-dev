@@ -1,0 +1,30 @@
+---
+# Create a virtuelenv for Review Board
+
+- name: download virtualenv package
+  get_url: url=https://pypi.python.org/packages/source/v/virtualenv/virtualenv-12.0.7.tar.gz
+           dest=/var/tmp/virtualenv-12.0.7.tar.gz
+           sha256sum=d681db1766cdc8aa1b37eb18252c264b775f971166c2bf658a9618c1f3d28741
+
+- name: extract virtualenv package
+  command: /bin/tar -xzf virtualenv-12.0.7.tar.gz
+           chdir=/var/tmp
+           creates=/var/tmp/virtualenv-12.0.7
+
+- name: install virtualenv package
+  command: /usr/bin/python setup.py install
+           chdir=/var/tmp/virtualenv-12.0.7
+           creates=/usr/local/bin/virtualenv
+  sudo: yes
+
+- name: create virtualenv
+  command: /usr/local/bin/virtualenv {{ venv }} creates={{ venv }}/bin/python
+
+- name: copy requirements.txt
+  copy: src=requirements.txt
+        dest={{ venv }}/requirements.txt
+
+- name: populate virtualenv
+  pip: virtualenv={{ venv }}
+       requirements={{ venv }}/requirements.txt
+       executable={{ venv }}/bin/pip

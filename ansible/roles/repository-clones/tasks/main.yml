@@ -1,0 +1,12 @@
+---
+# Clone Review Board project code if it is not already present
+
+- name: clone review board repositories
+  command: "git clone {{ item.url }} {{ item.name }}"
+  args:
+    chdir: "{{ src_dir }}"
+    creates: "{{ src_dir }}/{{ item.name }}"
+  with_items:
+    - { name: 'reviewboard', url: 'https://github.com/reviewboard/reviewboard.git' }
+    - { name: 'djblets', url: 'https://github.com/djblets/djblets.git' }
+    - { name: 'rbtools', url: 'https://github.com/reviewboard/rbtools.git'}
