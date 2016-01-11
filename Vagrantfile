@@ -17,6 +17,11 @@ Vagrant.configure("2") do |config|
     override.vm.box_url = "http://files.vagrantup.com/precise64.box"
   end
 
+  config.vm.provider :parallels do |prl, override|
+    override.vm.box = "precise64"
+    override.vm.box_url = "http://download.parallels.com/desktop/vagrant/precise64.box"
+  end
+
   config.vm.network :forwarded_port, guest: 8080, host: 8080
   config.vm.synced_folder "src/", "/src", :nfs => true
 
