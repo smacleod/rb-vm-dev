@@ -4,3 +4,5 @@ nose
 p4python
 Sphinx
 subvertpy
+django-oauth-toolkit 
+django-cors-headers
